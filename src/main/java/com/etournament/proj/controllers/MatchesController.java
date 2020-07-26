@@ -1,46 +1,41 @@
 package com.etournament.proj.controllers;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.etournament.proj.model.Match;
 import com.etournament.proj.services.MatchesService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
+@RequestMapping("/matches")
 public class MatchesController {
-	@Autowired
-	MatchesService matchesService;
-	
-	@GetMapping("/matches")
-	private List<Match> getAllMatches(){
-		return matchesService.getAllMatches();
-	
-	}
-	
-	@GetMapping("/matches/{id}")
-	private Match getMatch(@PathVariable("id") int id) {
-		return matchesService.getMatchesById(id);
-	}
-	
-	@DeleteMapping("/matches/{id}")
-	private void deleteMatch(@PathVariable("id") int id) {
-		matchesService.delete(id);
-		
-	}
-	
-	@PostMapping("/matches")
-	private int saveMatch(@RequestBody Match match ) {
-		matchesService.saveOrUpdate(match);
-		return match.getMatchId();
-	}
-	
+
+    @Autowired
+    private MatchesService matchesService;
+
+    @GetMapping
+    private List<Match> getAllMatches() {
+        return matchesService.getAllMatches();
+    }
+
+    @GetMapping("/{id}")
+    private Match getMatch(@PathVariable("id") Long id) {
+        return matchesService.getMatchesById(id);
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    private void deleteMatch(@PathVariable("id") Long id) {
+        matchesService.delete(id);
+    }
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    private Match saveMatch(@RequestBody Match match) {
+        return matchesService.saveOrUpdate(match);
+    }
+
 
 }

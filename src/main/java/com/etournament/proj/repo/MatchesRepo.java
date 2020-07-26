@@ -1,13 +1,11 @@
 package com.etournament.proj.repo;
 
 
-import org.springframework.data.repository.CrudRepository;
-
 import com.etournament.proj.model.Match;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 
+public interface MatchesRepo extends JpaRepository<Match, Long> {
 
-public interface MatchesRepo extends CrudRepository<Match, Integer> {
-	
-	
+
 }
