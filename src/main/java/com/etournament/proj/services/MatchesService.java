@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 
 @Service
@@ -19,8 +20,8 @@ public class MatchesService {
         return matchesRepo.findAll();
     }
 
-    public Match getMatchesById(Long id) {
-        Optional<Match> matchOptional = matchesRepo.findById(id);
+    public Match getMatchesById(String id) {
+        Optional<Match> matchOptional = matchesRepo.findById(UUID.fromString(id));
         if (matchOptional.isPresent())
             return matchOptional.get();
         else
@@ -32,8 +33,8 @@ public class MatchesService {
     }
 
 
-    public void delete(Long id) {
-        matchesRepo.deleteById(id);
+    public void delete(String id) {
+        matchesRepo.deleteById(UUID.fromString(id));
     }
 
 }

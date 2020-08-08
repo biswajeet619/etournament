@@ -21,13 +21,13 @@ public class MatchesController {
     }
 
     @GetMapping("/{id}")
-    private Match getMatch(@PathVariable("id") Long id) {
+    private Match getMatch(@PathVariable("id") String id) {
         return matchesService.getMatchesById(id);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    private void deleteMatch(@PathVariable("id") Long id) {
+    private void deleteMatch(@PathVariable("id") String id) {
         matchesService.delete(id);
     }
 

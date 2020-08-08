@@ -1,0 +1,4 @@
+---
+applications:
+  - name: etournament
+    path: target/Etournament-0.0.1-SNAPSHOT.jar

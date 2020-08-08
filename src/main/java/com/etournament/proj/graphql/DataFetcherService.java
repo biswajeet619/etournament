@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -31,12 +32,12 @@ public class DataFetcherService {
 
     @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     public Match getMatch(DataFetchingEnvironment dataFetchingEnvironment) {
-        long bookId = dataFetchingEnvironment.getArgument("matchId");
+        String matchId = dataFetchingEnvironment.getArgument("matchId");
         return matchRepository
-                .findById(bookId)
+                .findById(UUID.fromString(matchId))
                 .orElse(null);
     }
-    
+
     @PreAuthorize("hasRole('MODERATOR') or hasRole('ADMIN')")
     public Match createMatch(DataFetchingEnvironment dataFetchingEnvironment) {
         double matchFees = dataFetchingEnvironment.getArgument("matchFees");

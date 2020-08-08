@@ -1,17 +1,20 @@
 package com.etournament.proj.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import org.hibernate.annotations.Type;
+
+import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 
 @Entity
 public class Match {
 
     @Id
-    @GeneratedValue
-    private Long matchId;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Type(type = "uuid-char")
+    @Column(name = "matchId", columnDefinition = "VARCHAR(255)", insertable = false, updatable = false, nullable = false)
+    private UUID matchId;
     private Double matchFees;
     private Double matchPrize;
     private String matchName;
@@ -35,11 +38,11 @@ public class Match {
         this.matchPhotoImg = matchPhotoImg;
     }
 
-    public Long getMatchId() {
+    public UUID getMatchId() {
         return matchId;
     }
 
-    public void setMatchId(Long matchId) {
+    public void setMatchId(UUID matchId) {
         this.matchId = matchId;
     }
 
