@@ -3,7 +3,7 @@ package com.etournament.proj.model;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 
 @Entity
@@ -17,9 +17,23 @@ public class Match {
     private String matchName;
     private String squadCriteria;
     private String matchPP;
-    private Date matchDate;
+    private LocalDateTime matchDate;
     private String matchMap;
     private String matchPhotoImg;
+
+    public Match() {
+    }
+
+    public Match(Double matchFees, Double matchPrize, String matchName, String squadCriteria, String matchPP, LocalDateTime matchDate, String matchMap, String matchPhotoImg) {
+        this.matchFees = matchFees;
+        this.matchPrize = matchPrize;
+        this.matchName = matchName;
+        this.squadCriteria = squadCriteria;
+        this.matchPP = matchPP;
+        this.matchDate = matchDate;
+        this.matchMap = matchMap;
+        this.matchPhotoImg = matchPhotoImg;
+    }
 
     public Long getMatchId() {
         return matchId;
@@ -69,11 +83,11 @@ public class Match {
         this.matchPP = matchPP;
     }
 
-    public Date getMatchDate() {
+    public LocalDateTime getMatchDate() {
         return matchDate;
     }
 
-    public void setMatchDate(Date matchDate) {
+    public void setMatchDate(LocalDateTime matchDate) {
         this.matchDate = matchDate;
     }
 

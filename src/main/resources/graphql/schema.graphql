@@ -1,0 +1,30 @@
+type Match {
+    matchId: ID!
+    matchFees: Float!
+    matchPrize: Float!
+    matchName: String!
+    squadCriteria: String!
+    matchPP: String
+    matchDate: String!
+    matchMap: String!
+    matchPhotoImg:String
+}
+
+type Query {
+    matches(count: Int=10, page: Int=0):[Match]
+
+    match(matchId: ID!):Match
+}
+
+type Mutation {
+
+    createMatch(
+        matchFees: Float!,
+        matchPrize: Float!,
+        matchName: String!,
+        squadCriteria: String!,
+        matchPP: String="",
+        matchDate: String!,
+        matchMap: String!,
+        matchPhotoImg:String=""):Match
+}
