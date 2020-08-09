@@ -3,6 +3,7 @@ package com.etournament.proj.services;
 import com.etournament.proj.model.Match;
 import com.etournament.proj.repo.MatchesRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,7 +18,7 @@ public class MatchesService {
     private MatchesRepo matchesRepo;
 
     public List<Match> getAllMatches() {
-        return matchesRepo.findAll();
+        return matchesRepo.findAll(PageRequest.of(1000, 1)).toList();
     }
 
     public Match getMatchesById(String id) {

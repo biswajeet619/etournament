@@ -4,13 +4,13 @@ import com.etournament.proj.model.Match;
 import com.etournament.proj.repo.MatchesRepo;
 import graphql.schema.DataFetchingEnvironment;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
 public class DataFetcherService {
@@ -23,11 +23,8 @@ public class DataFetcherService {
         int count = dataFetchingEnvironment.getArgument("count");
         int page = dataFetchingEnvironment.getArgument("page");
         return matchRepository
-                .findAll()
-                .stream()
-                .skip(count * page)
-                .limit(count)
-                .collect(Collectors.toList());
+                .findAll(PageRequest.of(page, count))
+                .toList();
     }
 
     @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
