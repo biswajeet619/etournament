@@ -10,10 +10,33 @@ type Match {
     matchPhotoImg:String
 }
 
+type Registration {
+    matchId: ID!
+    userId: ID!
+    orderId: String!
+    players: [RegistrationPlayers]!
+    status: RegistrationStatus!
+}
+
+type RegistrationPlayers {
+    playerUsername: ID!
+}
+
+enum RegistrationStatus {
+    PAYMENT_PENDING,
+    COMPLETED,
+    CANCELLED
+}
+
 type Query {
     matches(count: Int=10, page: Int=0):[Match]
-
     match(matchId: ID!):Match
+
+    registrations(count: Int=10, page: Int=0): [Registration]
+    registrationsByMatch(count: Int=10, page: Int=0, matchId:ID!): [Registration]
+    registrationsForUser(count: Int=10, page: Int=0): [Registration]
+    registrationByMatchForUser(matchId:ID!): Registration
+
 }
 
 type Mutation {
@@ -29,4 +52,11 @@ type Mutation {
         matchPhotoImg:String=""):Match
 
     deleteMatch(matchId: ID!):Boolean
+
+    createRegistration(matchId: ID!): Registration
+    cancelRegistration(matchId: ID!): Boolean
+    updatePayment(matchId: ID!): Boolean
+    addPlayer(matchId: ID!, playerUsername: String!): Registration
+    removePlayer(matchId: ID!, playerUsername: String!): Registration
 }
+

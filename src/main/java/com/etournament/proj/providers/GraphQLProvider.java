@@ -48,7 +48,37 @@ public class GraphQLProvider {
     }
 
     private RuntimeWiring buildWiring() {
-        return RuntimeWiring.newRuntimeWiring()
+        RuntimeWiring.Builder builder = RuntimeWiring.newRuntimeWiring();
+        builder = buildMatchWiring(builder);
+        builder = buildRegistrationWiring(builder);
+        return builder
+                .build();
+    }
+
+    private RuntimeWiring.Builder buildRegistrationWiring(RuntimeWiring.Builder builder) {
+        return builder
+                .type(newTypeWiring("Query")
+                        .dataFetcher("registrations", graphQLDataFetchers.getAllRegistrations()))
+                .type(newTypeWiring("Query")
+                        .dataFetcher("registrationsByMatch", graphQLDataFetchers.getRegistrationByMatch()))
+                .type(newTypeWiring("Query")
+                        .dataFetcher("registrationsForUser", graphQLDataFetchers.getRegistrationForUser()))
+                .type(newTypeWiring("Query")
+                        .dataFetcher("registrationByMatchForUser", graphQLDataFetchers.getRegistrationByMatchForUser()))
+                .type(newTypeWiring("Mutation")
+                        .dataFetcher("createRegistration", graphQLDataFetchers.createRegistration()))
+                .type(newTypeWiring("Mutation")
+                        .dataFetcher("cancelRegistration", graphQLDataFetchers.cancelRegistration()))
+                .type(newTypeWiring("Mutation")
+                        .dataFetcher("updatePayment", graphQLDataFetchers.updatePayment()))
+                .type(newTypeWiring("Mutation")
+                        .dataFetcher("addPlayer", graphQLDataFetchers.addPlayer()))
+                .type(newTypeWiring("Mutation")
+                        .dataFetcher("removePlayer", graphQLDataFetchers.removePlayer()));
+    }
+
+    private RuntimeWiring.Builder buildMatchWiring(RuntimeWiring.Builder builder) {
+        return builder
                 .type(newTypeWiring("Query")
                         .dataFetcher("match", graphQLDataFetchers.getMatch()))
                 .type(newTypeWiring("Query")
@@ -56,8 +86,7 @@ public class GraphQLProvider {
                 .type(newTypeWiring("Mutation")
                         .dataFetcher("createMatch", graphQLDataFetchers.createMatch()))
                 .type(newTypeWiring("Mutation")
-                        .dataFetcher("deleteMatch", graphQLDataFetchers.deleteMatch()))
-                .build();
+                        .dataFetcher("deleteMatch", graphQLDataFetchers.deleteMatch()));
     }
 
 }

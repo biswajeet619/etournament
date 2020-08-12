@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
-public class DataFetcherService {
+public class MatchesDataFetcherService {
 
     @Autowired
     private MatchesRepository matchRepository;
