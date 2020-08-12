@@ -27,4 +27,6 @@ type Mutation {
         matchDate: String!,
         matchMap: String!,
         matchPhotoImg:String=""):Match
+
+    deleteMatch(matchId: ID!):Boolean
 }

@@ -7,7 +7,7 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import java.util.UUID;
 
 
-public interface MatchesRepo extends PagingAndSortingRepository<Match, UUID> {
+public interface MatchesRepository extends PagingAndSortingRepository<Match, UUID> {
 
 
 }

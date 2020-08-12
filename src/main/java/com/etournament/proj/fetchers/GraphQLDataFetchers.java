@@ -1,6 +1,7 @@
-package com.etournament.proj.graphql;
+package com.etournament.proj.fetchers;
 
 import com.etournament.proj.model.Match;
+import com.etournament.proj.services.DataFetcherService;
 import graphql.schema.DataFetcher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -23,5 +24,9 @@ public class GraphQLDataFetchers {
 
     public DataFetcher<Match> createMatch() {
         return dataFetchingEnvironment -> dataFetcherService.createMatch(dataFetchingEnvironment);
+    }
+
+    public DataFetcher<Boolean> deleteMatch() {
+        return dataFetchingEnvironment -> dataFetcherService.deleteMatch(dataFetchingEnvironment);
     }
 }

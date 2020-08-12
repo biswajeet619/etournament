@@ -1,5 +1,6 @@
-package com.etournament.proj.graphql;
+package com.etournament.proj.providers;
 
+import com.etournament.proj.fetchers.GraphQLDataFetchers;
 import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
 import graphql.GraphQL;
@@ -54,6 +55,8 @@ public class GraphQLProvider {
                         .dataFetcher("matches", graphQLDataFetchers.getAllMatches()))
                 .type(newTypeWiring("Mutation")
                         .dataFetcher("createMatch", graphQLDataFetchers.createMatch()))
+                .type(newTypeWiring("Mutation")
+                        .dataFetcher("deleteMatch", graphQLDataFetchers.deleteMatch()))
                 .build();
     }
 

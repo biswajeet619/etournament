@@ -1,7 +1,7 @@
-package com.etournament.proj.graphql;
+package com.etournament.proj.services;
 
 import com.etournament.proj.model.Match;
-import com.etournament.proj.repo.MatchesRepo;
+import com.etournament.proj.repo.MatchesRepository;
 import graphql.schema.DataFetchingEnvironment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -16,7 +16,7 @@ import java.util.UUID;
 public class DataFetcherService {
 
     @Autowired
-    private MatchesRepo matchRepository;
+    private MatchesRepository matchRepository;
 
     @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     public List<Match> getAllMatches(DataFetchingEnvironment dataFetchingEnvironment) {
@@ -56,5 +56,16 @@ public class DataFetcherService {
                 matchPhotoImg
         );
         return matchRepository.save(match);
+    }
+
+    @PreAuthorize("hasRole('MODERATOR') or hasRole('ADMIN')")
+    public Boolean deleteMatch(DataFetchingEnvironment dataFetchingEnvironment) {
+        String matchId = dataFetchingEnvironment.getArgument("matchId");
+        try {
+            matchRepository.deleteById(UUID.fromString(matchId));
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 }
