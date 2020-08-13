@@ -4,7 +4,8 @@ import com.etournament.proj.model.Registration;
 import com.etournament.proj.model.RegistrationId;
 import com.etournament.proj.model.RegistrationPlayer;
 import com.etournament.proj.model.RegistrationStatus;
-import com.etournament.proj.repo.RegistrationRepository;
+import com.etournament.proj.repository.RegistrationPlayerRepository;
+import com.etournament.proj.repository.RegistrationRepository;
 import com.etournament.proj.security.service.impl.UserDetailsImpl;
 import graphql.schema.DataFetchingEnvironment;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,9 @@ public class RegistrationsDataFetcherService {
 
     @Autowired
     private RegistrationRepository registrationRepository;
+
+    @Autowired
+    private RegistrationPlayerRepository registrationPlayerRepository;
 
     @PreAuthorize("hasRole('MODERATOR') or hasRole('ADMIN')")
     public List<Registration> getAllRegistrations(DataFetchingEnvironment dataFetchingEnvironment) {
@@ -125,7 +129,9 @@ public class RegistrationsDataFetcherService {
         Optional<Registration> registrationOptional = registrationRepository.findById(new RegistrationId(matchId, userId));
         if (registrationOptional.isPresent()) {
             Registration registration = registrationOptional.get();
-            registration.getPlayers().add(new RegistrationPlayer(playerUsername));
+            RegistrationPlayer registrationPlayer = new RegistrationPlayer(playerUsername);
+            registrationPlayerRepository.save(registrationPlayer);
+            registration.getPlayers().add(registrationPlayer);
             return registrationRepository.save(registration);
         } else {
             throw new RuntimeException("Registration Not found");
@@ -144,6 +150,7 @@ public class RegistrationsDataFetcherService {
         if (registrationOptional.isPresent()) {
             Registration registration = registrationOptional.get();
             registration.getPlayers().remove(new RegistrationPlayer(playerUsername));
+            registrationPlayerRepository.deleteById(playerUsername);
             return registrationRepository.save(registration);
         } else {
             throw new RuntimeException("Registration Not found");

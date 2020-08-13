@@ -1,4 +1,4 @@
-package com.etournament.proj.repo;
+package com.etournament.proj.repository;
 
 
 import com.etournament.proj.model.Match;

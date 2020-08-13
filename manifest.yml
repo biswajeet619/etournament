@@ -2,3 +2,5 @@
 applications:
   - name: etournament
     path: target/Etournament-0.0.1-SNAPSHOT.jar
+    env:
+      GOOGLE_APPLICATION_CREDENTIALS: BOOT-INF/classes/firebase/test-85a01.json

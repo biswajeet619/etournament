@@ -1,7 +1,7 @@
 package com.etournament.proj.services;
 
 import com.etournament.proj.model.Match;
-import com.etournament.proj.repo.MatchesRepository;
+import com.etournament.proj.repository.MatchesRepository;
 import graphql.schema.DataFetchingEnvironment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
